@@ -1,0 +1,5 @@
+8	Atlético Madrid	https://en.atleticodemadrid.com/
+9	Barcelona	https://www.fcbarcelona.com/en/
+10	Real Madrid	https://www.realmadrid.com/en
+11	Liverpool	https://www.liverpoolfc.com/
+12	Chelsea	https://www.chelseafc.com/en

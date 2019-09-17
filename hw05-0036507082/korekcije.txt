@@ -1,0 +1,73 @@
+﻿KOREKCIJA 5. DOMAĆE ZADAĆE -> Filip Sosa
+
+KOREKCIJE NA FERKU:
+--->Antonija Ćesić, 0036484302
+
+Ovu zadaću ocjenjujem ocjenom 1 jer ne postoje testovi za metodu generate() u prvom zadatku što je bilo navedeno u minimalnim uvjetima. 
+
+Prvi zadatak:
+
+Prvi zadatak je većinom dobar. 
+Kod je pregledan što je pozitivno i generalno je kod dobar. Iscrtava ti sve slike ispravno osim stabala. Krivi ti je kut pod kojim crta stabla. U metodi draw() u LSystemBuilderImpl-u liniju :
+
+TurtleState turtleState = new TurtleState(builder.origin, new Vector2D(1, 0).rotated(builder.angle),Color.BLACK, builder.unitLength * Math.pow(builder.unitLengthDegreeScaler, level)); 
+
+trebaš angle pomnožiti s pi/180 da ti pretvara sve u radjane. tj treba ovako izgledati:
+
+TurtleState turtleState = new TurtleState(builder.origin, new Vector2D(1, 0).rotated(builder.angle*Math.PI/180),Color.BLACK, builder.unitLength * Math.pow(builder.unitLengthDegreeScaler, level)); 
+
+Sve ostalo je dobro, ali ti nažalost fale testovi za funkciju generate() što je minimalan uvjet za prolaz. 
+
+
+Drugi zadatak:
+Nije greška, ali u funkciji za LIKE si mogao koristiti gotovu funkciju matches() samo si trebao zamijeniti * sa (.*) ili (.*?). To je praktički ista stvar, samo si morao provjeriti da postoji samo jedan takav znak "*", ali to je samo sugestija za jednostavnije rješenje.
+
+Kod je dobar generalno sve dobro radi za profesorove primjere ali u StudentDB nemas catch za početni try pa ti npr za upis "query j" ili neki drugi upis sa krivom formom program puca. Po meni bi bilo bolje da uhvatiš iznimku ispišeš poruku korisniku i dalje dozvoljavaš upis do upisa "exit".
+Isto tako možda bi u StudentDatabase-u iz konstruktora izbacila onu for petlju i ubacila ga u funkciju input jer tako i tako s tom funkcijom puniš internu listu i mapu.
+
+------------------------------------------------------------------------------------------------
+
+--->Vedran Deduš, 1191231493
+
+Ovoj zadaci dajem ocjenu 1 jer nema testova za gennerate što je minimalno traženo
+
+Zadatak 2.
+Imas dosta dugackih metoda (npr nextToken ili parse) koje bi bilo dobro razbiti na manje, gledaj da ti memtode nisu vece od 40 linija ili jos bolje da cijela metoda odjednom stane na ekran.
+Kada provjeravas u lekseru npr za LIKE ides slovo po slovo ali prvo gledas postoji li uopce iduce slovo pa onda provjeravas slovo, bilo bi ti lakse da odma provjeris postoje li iduca 3 slova i odnda provjeris jesu li ona E I K i time sve mozes stavit u jedan if umjesto da ih imas vise. Takodjer za like mislim da on mora biti velikim slovima napisan pa ti ovo toUpperCase ne treba. Samo za and je receno da nije case senzitive (ako se ne varam).
+public static final IComparisonOperator LIKE korstis imena varijabli i,j,t sto zbunjuje dosta, takodjer receno je da ne skracujemo imana varijabli pa pripazi na to
+
+
+Zadatak radi uredno i ispisnje ocekivan.
+
+Zadatak2
+Collection baca warrning razred dictionary.
+Biljke sve crtas pod krivim kutem, na pocetku su nagnute sto nebi trebale biti.
+Metoda generate prolazi testove (kad ih se doda)
+
+------------------------------------------------------------------------------------------------
+
+--->Josip Delač, 0036502684
+
+Zbog nedostatka testova za generate metodu nazalost ocjena je 1
+
+1.zadatak
+
+Svi primjeri rade kako je namijenjeno, kod je intuitivno i jednostavno napisan ali nigdje nema JUnitTestova za generate funkciju. To sam i ja zaboravio ali posto je to minimalno prihvatljivo nazalost ocjena ce bit 1.
+
+
+2.zadatak
+
+ComparisonOperator like si mogao pojednostavnit koristenjem indexOf interne metode stringa umjesto runcim testiranjem broja * u stringu.Lexer i parser dobro napisani.
+
+Ukupno Javadoc je na trenutke prekratak ili nedostaje. Ali to nije bitno utjecalo na razumljivost koda posto je dosta jednostavan. Testovi (koje si napisao) su dobri i dovoljno opsezni. 
+
+================================================================================================
+
+1. Zadatak
+Dodani testovi za metodu generate.
+Popravljen kut u metodi draw. Biljke se crtaju pod dobrim kutom.
+ 
+2. Zadatak
+U klasi QueryLexer provjera za like skraćena u jedan if.
+ComparisonOperator LIKE pojednostavljen metodom matches.
+U razredu QueryParser dodane pomoćne metode. 

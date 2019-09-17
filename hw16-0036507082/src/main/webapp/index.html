@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<!-- Radimo malo i sa stilovima... -->
+		<!-- Vidi: http://www.w3schools.com/cssref/default.asp -->
+		
+		<meta charset="UTF-8">
+		<title>Galerija</title>
+		
+		<style>
+		
+		  .buttonCss {
+			-moz-box-shadow: 3px 4px 0px 0px #899599;
+			box-shadow: 3px 4px 0px 0px #899599;
+			background:-moz-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+			background:-o-linear-gradient(top, #ededed 5%, #bab1ba 100%);
+			background:linear-gradient(to bottom, #ededed 5%, #bab1ba 100%);
+			margin: .5vw;
+			background-color:#ededed;
+			-moz-border-radius:15px;
+			-webkit-border-radius:15px;
+			border-radius:15px;
+			border:1px solid #d6bcd6;
+			cursor:pointer;
+			color:#092f38;
+			font-size:17px;
+			padding:7px 25px;
+			text-decoration:none;
+			text-shadow:0px 1px 0px #e1e2ed;
+		}
+		.buttonCss:hover {
+			background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #bab1ba), color-stop(1, #ededed));
+			background:-moz-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+			background:-o-linear-gradient(top, #bab1ba 5%, #ededed 100%);
+			background:linear-gradient(to bottom, #bab1ba 5%, #ededed 100%);
+			background-color:#bab1ba;
+		}
+		  
+		
+		  h1 {color: white; text-align: center;}
+		  h1:HOVER {color: grey;}
+		  
+		  p {color: white;}
+		  
+		  img {margin: .5vw;padding:1px;
+   				border:1px solid #FFFFFF;
+  				background-color:#202020;}
+		  
+		  h3 {color: white;}
+
+		</style>
+		
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="js/htmlescaping.js"></script>
+		<script type="text/javascript"><!--
+		  // vidi: http://www.w3schools.com/ajax/default.asp
+
+		  $(document).ready(function() {
+				$.ajax({
+					url : "rest/images",
+					data : {
+						dummy : Math.random()
+					},
+					dataType : "json",
+					success : function(data) {
+						var tags = data; // već je JSON zbog dataType gore...
+						var html = "";
+						if (tags.length == 0) {
+							html = "Nema tagova..."
+						} else {
+							for (var i = 0; i < tags.length; i++) {
+								html += "<button class='buttonCss' onclick='tagThumbnails(\"" + htmlEscape(tags[i]) + "\");'>" + htmlEscape(tags[i]) + "</button>";
+							}
+						}
+						$("#tagsButtons").html(html);
+					}
+				})
+			});
+				  
+		function tagThumbnails(tag) {
+			$.ajax({
+				url : "rest/images/"+tag,
+				data : {
+					dummy : Math.random()
+				},
+				dataType : "json",
+				success : function(data) {
+					var thum = data; // već je JSON zbog dataType gore...
+					var html = "";
+					if (thum.length == 0) {
+						html = "Nema slikaa..."
+					} else {
+						for (var i = 0; i < thum.length; i++) {
+							html += "<img onclick='bigPic(\""+htmlEscape(thum[i].name) + "\");' src='picture?path="+htmlEscape(thum[i].path) + "'>";
+						}
+					}
+					$("#thumbnails").html(html);
+				}
+			})
+		}
+				
+		function bigPic(path) {
+			$.ajax({
+				url : "rest/images/bigImage/"+path,
+				data : {
+					dummy : Math.random()
+				},
+				dataType : "json",
+				success : function(data) {
+					var pic = data; // već je JSON zbog dataType gore...
+					var html = "";
+					html = "<img src='picture?path="+htmlEscape(pic.path) + "'>";
+					html += "<h3>"+pic.name+"</h3>";
+					html += "<p>"+pic.description+"</p>";
+					html += "<p>Tags: ";
+					for (var i = 0; i < pic.tags.length; i++) {
+						html += pic.tags[i]+" ";
+					}
+					html += "</p>";
+					$("#picture").html(html);
+				}
+			})
+		}
+		
+		//--></script>
+	</head>
+	<body bgcolor="202020">
+	
+		<h1>Galerija</h1>
+	
+		<div id="tagsButtons">&nbsp;</div>
+		<div id="thumbnails">&nbsp;</div>
+		<div id="picture">&nbsp;</div>
+	
+	</body>
+</html>

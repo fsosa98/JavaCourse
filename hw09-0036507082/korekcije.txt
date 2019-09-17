@@ -1,0 +1,61 @@
+﻿KOREKCIJA 9. DOMAĆE ZADAĆE -> Filip Sosa
+
+KOREKCIJE NA FERKU:
+--->Dora Marković, 0036479108
+
+Sve u svemu, ocjena je 1 jer 2. i 3. zadatak ne rade.
+
+1. Zadatak je okej rješen.
+
+2. Zadatak
+Krivo si definirao .jar filove u pom.xml.
+Trebali bi se nalaziti u fer.hr.zemris.java.Raytracer/Fractals a ne u Raytracer/Fractals.
+Ispiše se prikladan crtež fraktala, no kad se promjeni veličina slike, baci se iznimka i dalje se ništa ne iscrta.
+Malo sam duže proučavala i ispada da je problem u tome što se NewtonProduce samo jednom poziva, a u njegovom konstruktoru definiraš novi pool. I onda, kad poveća ili smanji slika, koristi se isti pool, koji je sad prazan a maksimalni kapacitet mu je 0 i zato dobiješ  RejectedExecutionHandler.rejectedExecution. Rješenje je da u metodi produce(), koja se poziva prilikom svake promjene slike inicijaliziraš novi pool.
+
+RayCasterParallel ti ne radi, analogno vrijedi i za RayCasterParallel2. Slika se dobro prikazuje, no kada se ide promijeniti veličina ekrana nastanu trake. To se događa jer u arrayu boja postavljaš boju na određeni index kao npr. red[y * height + x] = rgb[0] > 255 ? 255 : rgb[0]; a trebao bi red[y * width + x] i zato čim se pormjeni inicijalna veličina ekrana iscrtavaju se trakice. Bezveze greška, vjerojatno iz nepažnje nastala, ali nažalost ti moram dati 1 jer zadaća ne zadovoljava minimalne uvjete.
+Ostao ti je dio koda zakomentiran, to izbriši. Inače, čitljivo je napisano (ili to ili jer je veći dio koda svima isti pa je lako shvatiti poantu). Javadoc bi možda trebao biti malo opisniji(više od jedne rečenice napisati, detaljnije opisati što se u toj metodi stvarno događa).
+Isto tako možda bi u StudentDatabase-u iz konstruktora izbacila onu for petlju i ubacila ga u funkciju input jer tako i tako s tom funkcijom puniš internu listu i mapu.
+
+------------------------------------------------------------------------------------------------
+
+--->Domagoj Maslovar, 0036492145
+
+Svi osnovni slučajevi rade po očekivanju, ali zadaća ipak ne zadovoljava minalne uvjete za drugi i treći zadatak. Kod je na trenutke šturo dokumentiran i pom.xml je loše postavljen. Sve u svemu, primoran sam dati nedovoljnu ocjenu (inače bi bilo 3).
+
+- maven dependency je loše napisan. Dependency za fraktale: groupId=hr.fer.zemris.java.fractals artifactId=fractal-viewer, dependency za raytracer: groupId=hr.fer.zemris.java.raytracer. Ovo ostalo si dobro stavio, no moram skinuti ocjenu
+
+1. ZADATAK
+- minimalni uvjeti zadovoljeni
+
+2. ZADATAK
+- u parseru bacaš runtimeexception, koji je malo preširok i nedefiniran i ne vidim razloga zašto bi ga itko bacao samo tako. Kod tebe bi eventualno pasao IllegalStateException jer do tog dijela koda ne smije doći. Osim toga što je iznimka nedefinirana, ne dobivam nikakvu poruku od nje kako i zašto. Ako mi se program sruši, nemam pojma kako i zašto nego treba paliti debugger. Loša praksa, kolega
+- minimalni uvjeti NISU zadovoljeni -> program se ruši pri promjeni veličine prozora
+
+3. ZADATAK
+- minimalni uvjeti NISU zadovoljeni -> trake se ispremiješaju pri promjeni veličine prozora
+
+------------------------------------------------------------------------------------------------
+
+--->Daria Matković, 0036480046
+
+Ova zadaća ocjenjena je ocjenom 5 jer jer zadovoljena minimalna implementacija, te su gotovo sve stvari napravljene identično kako je zadano u uputi. 
+
+1.Zadatak: postoji minimalna implementacija.
+
+2.Zadatak: postoji minimalna implementacija. Dobiven je fraktal koji ima isti oblik kao što je opisano u pripremi, samo su boje drukčije poredane. Parser radi kao što je opisano u uputi za zadaću.
+
+3.Zadatak: postoji minimalna implementacija. Slika koja je dobivena pokretanjem RayCasterParallel po bojama nije identična onoj koja je zadana u uputi, jako se malo razlikuje. Po obliku geometrijskog tijela slika je identična kao ona koja je zadana u uputi.
+
+================================================================================================
+
+-pom.xml ispravljen
+
+2. Zadatak
+Program ispravljen i radi kada se promjeni veličina prozora (problem je bio u "pool.shutdown()").
+Runtime zamijenjen s IllegalStateException.
+ 
+3	. Zadatak
+RayCasterParallel ispravljen i radi kada se promjeni veličina prozora (height zamijenjen s width).
+RayCasterParallel2 ispravljen i radi kada se promjeni veličina prozora (height zamijenjen s width).
+
